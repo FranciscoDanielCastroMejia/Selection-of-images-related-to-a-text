@@ -23,6 +23,7 @@ y2 = f(x2)
 y3 = f(x3)
 y4 = f(x4)
 
+
 # Crear la figura y el eje
 fig, ax = plt.subplots(figsize=(8, 6))
 
