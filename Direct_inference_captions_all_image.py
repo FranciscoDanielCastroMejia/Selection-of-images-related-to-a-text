@@ -43,10 +43,32 @@ def check_url(string):
 # Load an image
 def load_image(image_path):
     if check_url(image_path):
-        respuesta = requests.get(image_path, headers=headers, stream=True)#.raw
-        return PIL.Image.open(requests.get(image_path, headers=headers, stream=True).raw)
+        respuesta = requests.get(image_path, headers=headers, stream=True)
+        # Use a try-except block to handle potential errors during image opening
+        try:
+            img = PIL.Image.open(respuesta.raw).convert("RGB")  # Explicitly convert to RGB
+            # Redimensionar si la imagen excede el límite de píxeles
+            if img.size[0] * img.size[1] > 178956970:  # Tamaño límite
+                print("Redimensionando imagen grande...")
+                img.thumbnail((3000, 3000))  # Cambia el tamaño máximo según tus necesidades
+            return img
+        except PIL.UnidentifiedImageError:
+            print(f"Failed to open image from: {image_path}")
+            return None  # Return None if image opening fails
     elif os.path.exists(image_path):
-        return PIL.Image.open(image_path)
+        try:
+            img = PIL.Image.open(image_path).convert("RGB")  # Explicitly convert to RGB
+            # Redimensionar si la imagen excede el límite de píxeles
+            if img.size[0] * img.size[1] > 178956970:  # Tamaño límite
+                print("Redimensionando imagen grande...")
+                img.thumbnail((3000, 3000))  # Cambia el tamaño máximo según tus necesidades
+            return img
+        except PIL.UnidentifiedImageError:
+            print(f"Failed to open image from: {image_path}")
+            return None
+    else:
+        print(f"Invalid image path or URL: {image_path}")
+        return None
     
 
 #________________Image Inference________________________________________
@@ -116,7 +138,7 @@ if __name__=='__main__':
                         
                         barra.update(i) #increment the counter
 
-                        with open(f'Links_captions_{file[:-5]}.json', 'w')as file:
+                        with open(f'Links_captions_{file[:-5]}.json', 'w')as file: #Se guardaran las bases de datos por subcategorias
                             json.dump(captions, file, indent=4)
                     
                     barra.finish()
