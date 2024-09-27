@@ -1,0 +1,64 @@
+{
+    "wikipedia": {
+        "caption": "little children playing ball",
+        "nouns": [
+            "children",
+            "ball"
+        ],
+        "verbs": [
+            "playing"
+        ],
+        "adj": [
+            "little"
+        ],
+        "adv": [
+            "quickly"
+        ],
+        "propn": [
+            "alfredo"
+        ],
+        "sentiment": "positive"
+    },
+    "google": {
+        "caption": "playful dogs playing ball",
+        "nouns": [
+            "dogs",
+            "ball"
+        ],
+        "verbs": [
+            "playing"
+        ],
+        "adj": [
+            "playful"
+        ],
+        "adv": [
+            "happily"
+        ],
+        "propn": [
+            "alfredo"
+        ],
+        "sentiment": "positive"
+    },
+    "netflix": {
+        "caption": "playful dogs playing ball",
+        "nouns": [
+            "dogs",
+            "racket",
+            "ball"
+        ],
+        "verbs": [
+            "dancing",
+            "blowing"
+        ],
+        "adj": [
+            "little"
+        ],
+        "adv": [
+            "carefully"
+        ],
+        "propn": [
+            "alfredo"
+        ],
+        "sentiment": "positive"
+    }
+}
