@@ -55,6 +55,14 @@ def load_image(image_path):
         except PIL.UnidentifiedImageError:
             print(f"Failed to open image from: {image_path}")
             return None  # Return None if image opening fails
+        except OSError as e:
+            # Manejo de errores relacionados con archivos, como si la imagen está truncada o dañada
+            print(f"Error al procesar la imagen: {e}")
+            return None
+        except Exception as e:
+            # Captura cualquier otro tipo de error inesperado
+            print(f"Ha ocurrido un error inesperado: {e}")
+            return None
     elif os.path.exists(image_path):
         try:
             img = PIL.Image.open(image_path).convert("RGB")  # Explicitly convert to RGB
@@ -65,6 +73,14 @@ def load_image(image_path):
             return img
         except PIL.UnidentifiedImageError:
             print(f"Failed to open image from: {image_path}")
+            return None
+        except OSError as e:
+            # Manejo de errores relacionados con archivos, como si la imagen está truncada o dañada
+            print(f"Error al procesar la imagen: {e}")
+            return None
+        except Exception as e:
+            # Captura cualquier otro tipo de error inesperado
+            print(f"Ha ocurrido un error inesperado: {e}")
             return None
     else:
         print(f"Invalid image path or URL: {image_path}")
@@ -120,6 +136,12 @@ if __name__=='__main__':
                         #se descarga en catche la imagen
                         image = load_image(imagen_path)
 
+                        # Check if image loading was successful
+                        if image is None:
+                            print(f"Skipping image: {imagen_path}")
+                            continue # Skip to the next image if loading failed
+
+
                         prompt = "Caption en"
                         model_inputs = image_processor(text=prompt, images=image, return_tensors="pt").to(device)
                         input_len = model_inputs["input_ids"].shape[-1]
@@ -142,6 +164,7 @@ if __name__=='__main__':
                             json.dump(captions, file, indent=4)
                     
                     barra.finish()
+                    print(f'Cantidad de imagenes acumuladas: {images}')
 
     print(f'Cantidad de imagenes: {images}')
     print(f'Catnidad de DB vacias: {cont}')
