@@ -62,9 +62,10 @@ def rectange(peso, width, height, marco_ancho): #los parametros de entrada son l
 
 
 #-En esta parte crearemos las bases de datos donde vienen los productos cosenos con el texto qeu queremos ingresar
-text = "The Antarctic continent is the coldest place on Earth. The lowest temperature ever recorded was observed in 1983: less than 89 degrees Celsius. The Antarctic ice layer is also interesting because under its surface a large number of underground lakes are located. The largest of them, Lake Vostok, is of dimensions equivalent to Lake Ontario and is the seventh largest lake on the planet."
-dataset = "caption_art" #elegir el dataset para los captions con el articulo
-#dataset = "caption_wiki" #elegir el dataset para los captions con el datasett global
+text = "Cars are an integral part of modern life, offering convenience, mobility, and freedom to travel. From sleek sports cars that embody speed and performance to reliable family sedans designed for comfort and safety, the variety of vehicles on the road reflects the diverse needs and preferences of drivers. Electric cars are becoming increasingly popular, representing a shift towards sustainability with their environmentally friendly designs and innovative technologies. Meanwhile, luxury cars continue to captivate with their sophisticated features and high-end craftsmanship. Whether it’s a compact car for city driving or a rugged SUV for off-road adventures, cars play a crucial role in shaping our daily experiences and the way we connect with the world around us."
+#dataset = "caption_art" #elegir el dataset para los captions con el articulo
+#dataset = "caption_wiki" #elegir el dataset para los captions con el dataset wikimedia
+dataset = "GLOBAL" #elegir el dataset para los captions con el dataset GLOBAL (wikimedia + articulo)
 look_dict2(text,dataset ) #funcion para crear las bases de datos
 
 

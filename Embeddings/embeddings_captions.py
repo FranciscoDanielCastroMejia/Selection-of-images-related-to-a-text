@@ -27,8 +27,9 @@ print(device)
 
 #___Here choose the database we have to options, databse for links of articles o database o links of wikimedia
 
-#database = 'Article'
-database = 'Wikimedia'
+#database = 'article'
+#database = 'caption_wiki'
+database = 'GLOBAL'
 
 #________________here we choose which embedder we will use_____________
 
@@ -39,7 +40,7 @@ type_of_embedder = types[3]
 
 #_____Here we choose the path deppendind of the database that was choosen
 
-if database == 'Article':
+if database == 'article':
 
     #we load the data base and create the new one f it doesnt exist
 
@@ -58,11 +59,16 @@ if database == 'Article':
         with open('BD Dataset Articles/only_links_captions.json','w') as file:
             json.dump(data_base, file, indent=4)
 
-elif database == 'Wikimedia':
+elif database == 'caption_wiki':
     
-    with open('BD New Dataset/DB_all_links_captions.json', 'r') as file:
+    with open('BD New Dataset/DB_wiki_links_captions.json', 'r') as file:
             data_base = json.load(file)
-        
+
+elif database == 'GLOBAL':
+
+    with open('BD New Dataset/DB_GLOBAL_links_captions.json', 'r') as file:
+            data_base = json.load(file)
+
 
 
 
@@ -88,7 +94,7 @@ barra.finish()
 
 #Here we save the new database with the links and the embbedings
 
-path = embedder.path(type_of_embedder, "caption_wiki")
+path = embedder.path(type_of_embedder, database)
 
 
 with open(path,'w') as file:

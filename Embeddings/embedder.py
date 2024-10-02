@@ -131,6 +131,25 @@ def path(type, action):
         elif type=="st_mp" and action=="caption_wiki":
                 path = 'BD Embeddings New Dataset/lnk_cap_emb_st-mp.json'
                 return path
+        
+        #_________________captions GLOBAL____________________________________(falta bert)
+        #_____________________________________________________________  
+
+        if type=="rta_cls" and action=="GLOBAL":
+                path = 'BD Embeddings New Dataset/GLOBAL_lnk_cap_emb_rta-cls.json'
+                return path
+        
+        elif type=="rta_mp" and action=="GLOBAL":
+                path = 'BD Embeddings New Dataset/GLOBAL_lnk_cap_emb_rta-mp.json'
+                return path
+        
+        elif type=="st_cls" and action=="GLOBAL":
+                path = 'BD Embeddings New Dataset/GLOBAL_lnk_cap_emb_st-cls.json'
+                return path
+        
+        elif type=="st_mp" and action=="GLOBAL":
+                path = 'BD Embeddings New Dataset/GLOBAL_lnk_cap_emb_st-mp.json'
+                return path
         #_________________articles____________________________________(falta bert)
         #_____________________________________________________________  
 

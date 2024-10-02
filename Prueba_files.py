@@ -1,12 +1,10 @@
-#programa prueba par ver que carpetas contienen datos y cuales no contienen
+#programa prueba para ver que carpetas contienen datos y cuales no contienen
 #al igual que contabilizar todas las imagenes que existen.
-#Juntar todas las bases de datos 
+#Funcion para Juntar todas las categorias en una base de datos GLOBAL
+#Unir la base de datos de los articulos con la GLOBAL
 
 import os 
 import json
-
-
-
 
 
 
@@ -82,7 +80,7 @@ def join_captions(path_folder):
                     else: #if the link has not been added before, we add it to the new database
                         DB_all_captions[link] = caption
     
-    with open('BD New Dataset/DB_all_links_captions.json', 'w')as file:
+    with open('BD New Dataset/DB_wiki_links_captions.json', 'w')as file:
         json.dump(DB_all_captions, file, indent=4)
             
 
@@ -92,6 +90,33 @@ def join_captions(path_folder):
 
 
 
+def combine_datasets(path_dataset1:str, path_dataset2:str): #El dataset1 se unira al dataset2 
+    
+    with open(path_dataset1, 'r') as file:
+        dataset1 = json.load(file) 
+    with open(path_dataset2, 'r') as file:
+        dataset2 = json.load(file)
+    
+    print(f'Size of Dataset1: {len(dataset1)}')
+    print(f'Size of Dataset2: {len(dataset2)}')
+
+    cont_img_repeated = 0
+    #dataset1 and dataset2 are dicctionariesm their format is link:"caption"
+
+    for link, caption in dataset1.items():
+
+        if link not in dataset2: #if the link doesnt exist in the dataset2 add all the element in the dataset 2
+            dataset2[link] = caption
+        else:
+            cont_img_repeated += 1  
+    
+    
+
+    with open('BD New Dataset/DB_GLOBAL_links_captions.json','w')as file:
+        json.dump(dataset2, file, indent=4)
+        
+    print(f'Nummber of images repeated: {cont_img_repeated}')
+    print(f'Size of the new Dataset3: {len(dataset2)}')
 
 
 
@@ -104,8 +129,14 @@ if __name__=='__main__':
     path_captions = '/media/mitos/nuevo ssd/IMG Captions' #Data bases with links and captions
     path_all_images = '/media/mitos/nuevo ssd/BASE DE DATOS LINKS' #data bases with all the links of the images
     
-    count_images(path_captions) 
-    join_captions(path_captions)
+    
+    path_dataset1 = 'BD Dataset Articles/only_links_captions.json'
+    path_dataset2 = 'BD New Dataset/DB_wiki_links_captions.json'
+
+
+    #count_images(path_captions) 
+    #join_captions(path_captions)
+    combine_datasets(path_dataset1,path_dataset2)
 
     
 
