@@ -62,9 +62,10 @@ def rectange(peso, width, height, marco_ancho): #los parametros de entrada son l
 
 
 #-En esta parte crearemos las bases de datos donde vienen los productos cosenos con el texto qeu queremos ingresar
-
-text = "The planets in our solar system are a fascinating and diverse group of celestial bodies, each with its own unique characteristics. From the scorching surface of Mercury, the closest planet to the Sun, to the gas giants like Jupiter and Saturn, whose massive sizes and intricate systems of rings and moons captivate scientists and stargazers alike. Earth, our home, stands out for its ability to support life, while Mars, the red planet, continues to intrigue with its potential for past or present microbial life. Farther out, Uranus and Neptune, the ice giants, hold secrets of the outer solar system, with their mysterious atmospheres and extreme conditions. Together, these planets provide a glimpse into the complexities and wonders of our cosmic neighborhood"
-look_dict2(text) #funcion para crear las bases de datos
+text = "The Antarctic continent is the coldest place on Earth. The lowest temperature ever recorded was observed in 1983: less than 89 degrees Celsius. The Antarctic ice layer is also interesting because under its surface a large number of underground lakes are located. The largest of them, Lake Vostok, is of dimensions equivalent to Lake Ontario and is the seventh largest lake on the planet."
+dataset = "caption_art" #elegir el dataset para los captions con el articulo
+#dataset = "caption_wiki" #elegir el dataset para los captions con el datasett global
+look_dict2(text,dataset ) #funcion para crear las bases de datos
 
 
 
@@ -82,7 +83,7 @@ with open('BD pesos look dict/lnk_pesos_emb_st-mp.json', 'r') as file:
 
 #____importaremos la base de datos donde es encuentran lso articulos con su resumen correspondiente
 
-with open('BD Sistema Img Caption/links_article_TS.json', 'r') as file:
+with open('BD Dataset Articles/links_article_TS.json', 'r') as file:
     art = json.load(file)
 
 #invertimos las llaves por los valores del diccionario para que la busqueda sea mas eficiente, sabiendo qeu los articulos no se repiten

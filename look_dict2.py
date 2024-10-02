@@ -19,7 +19,7 @@ from progressbar import ProgressBar
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-def look_dict2(text):
+def look_dict2(text, dataset):
 
     #________________here we choose which embedder we will use_____________
 
@@ -31,7 +31,7 @@ def look_dict2(text):
 
 
         #________________here we choose the path of the database_____________
-        path = embedder.path(type_of_embedder, "caption")
+        path = embedder.path(type_of_embedder, dataset)
         print(path)
 
         with open(path, 'r')as file:
@@ -58,7 +58,7 @@ def look_dict2(text):
             similarity = F.cosine_similarity(embedding_t[0], embedding_C[0], dim=0)
             links_pesos_embeddings[link] = similarity.tolist()
             #print(f"Similitud coseno promedios: {similarity}")
-
+        
         #se guardarán los vectores de los pesos SIN ORDENAR, esto para hacer una correlacion
         with open(f"BD pesos look dict desordenados/pesos_desorder_{types[cont]}.json", "w") as file:
             json.dump(links_pesos_embeddings, file, indent=4)
@@ -79,7 +79,7 @@ def look_dict2(text):
 if __name__=='__main__':
 
     #Here is where we make the embedding of the text
-    #text = "The Antarctic continent is the coldest place on Earth. The lowest temperature ever recorded was observed in 1983: less than 89 degrees Celsius. The Antarctic ice layer is also interesting because under its surface a large number of underground lakes are located. The largest of them, Lake Vostok, is of dimensions equivalent to Lake Ontario and is the seventh largest lake on the planet."
+    text = "The Antarctic continent is the coldest place on Earth. The lowest temperature ever recorded was observed in 1983: less than 89 degrees Celsius. The Antarctic ice layer is also interesting because under its surface a large number of underground lakes are located. The largest of them, Lake Vostok, is of dimensions equivalent to Lake Ontario and is the seventh largest lake on the planet."
     #text = "The Taj Mahal is a complex of buildings and gardens built in the 17th century during the Mogol Empire. It is recognized by UNESCO as a World Heritage Site. The change of color of the marble of the monument was attributed from a start to the air pollution in the vicinity."
     #text = "Isaac Asimov imagined a future in which robots carry out activities that are traditionally carried out by humans more efficiently. Asimov was a visionary who wrote his novel at a time when the first digital computer of general use had not yet been built. In his novels, Asimov became a well-known science fiction writer Isaac Asimov."
     #text = "Small magazine published an article on how microgravity affects brain connections. Researchers find that there are some changes in the organization of the brain immediately after the end of the mission. After eight months some astronauts were subjected to magnetic resonance studies. Of them, they remain, while others disappear, returning the brain to its original state."
@@ -96,7 +96,7 @@ if __name__=='__main__':
     #text = "The Nobel Prize in Physics for this year was announced on 6 October. The prize was awarded to Charles Kao for his work on the transmission of light in optical fibers. Williard Boyle and George Smith for the invention of the CCD image sensor \u2013 the device that replaces the film roll in digital cameras."
     #text = "Jonathan Swift describes in \u2018The travels of Gulliver\u2019 the features of the protagonist in the country of the Liliputenses, similar to humans but only 15 centimeters high. According to Swift, the proportions of the body of dwarfs and giants would have been the same as those of our species."
     #text = "\"The Murders of Morgue Street\" was published by Poe in 1841, half a century before Juan Vucetich in Argentina first used fingerprints \u2013 which are unique to each person \u2013 to solve a criminal case. After a century Poe would have taken 150 years to be born, he would have known that each individual could also be identified by his genetic code."
-    text = "Gustavo Del Castillo, Potosino and chemical of formation, became interested in physics. He decided in 1951 to travel to the United States in search of a doctorate in this specialty. In parallel to the creation of the School of Physics, he began the construction of a \u201cmist chamber\u201d",
+    #text = "Gustavo Del Castillo, Potosino and chemical of formation, became interested in physics. He decided in 1951 to travel to the United States in search of a doctorate in this specialty. In parallel to the creation of the School of Physics, he began the construction of a \u201cmist chamber\u201d",
     #text = "The infrastructure of a city includes artificial concrete structures or other materials that have displaced natural elements such as trees or water ponds. These new elements interact with solar radiation differently than it did with the original vegetation or bodies of water, altering the environment and contributing to the so-called heat island effect. To mitigate this last effect, specialists consider the deployment of a green and blue urban infrastructure."
     #text = "The current pandemic has brought about changes that are expected to be permanent. The Plague of Justiniano was far from being an intra-scendent flu and had a significant social and economic impact. We would expect, of course, that an epidemic that ends with a substantial percentage of the population will lead to irreversible changes."
     #text = "The life of the Roman cities of Pompeii and Herculano reached an abrupt end. The two cities were buried by a thick layer of volcanic material in 79 C.E. Researchers find clear differences between diets followed by men and women. Women consumed less protein from cereals and seafood, and relatively more from animals and land products."
@@ -108,4 +108,7 @@ if __name__=='__main__':
     #text = "The coronavirus pandemic, caused by the COVID-19 virus, has had a profound impact on the world since it first emerged in late 2019. Spreading rapidly across the globe, it led to unprecedented public health measures, including widespread lockdowns, social distancing, and the use of face masks to prevent transmission. The virus has not only challenged healthcare systems but also disrupted economies, education, and daily life, forcing societies to adapt to a new normal. The development and distribution of vaccines brought hope and began to turn the tide against the pandemic, though variants of the virus continue to pose challenges. Beyond the immediate health effects, the pandemic has prompted reflections on global cooperation, the importance of public health infrastructure, and the resilience of communities in the face of adversity."
     #text = "Monkeys and gorillas are fascinating members of the primate family, each with distinct characteristics and behaviors that highlight their evolutionary significance. Monkeys, which include both Old World monkeys like baboons and macaques, and New World monkeys like capuchins and howler monkeys, are known for their diverse adaptations to various habitats. They exhibit a wide range of social structures, from complex troop hierarchies to cooperative foraging behaviors. Gorillas, on the other hand, are the largest of the great apes and are known for their impressive size and strength, as well as their gentle and social nature. Living primarily in the dense forests of Africa, gorillas are divided into two species: the Eastern gorillas and the Western gorillas. Both species face significant threats from habitat loss and poaching, making conservation efforts crucial for their survival. Studying these primates not only provides insights into their lives but also helps us understand the evolutionary connections shared with humans."
 
-    look_dict2(text)
+
+    #dataset = "caption_art" #elegir el dataset para los captions con el articulo
+    dataset = "caption_wiki" #elegir el dataset para los captions con el datasett global
+    look_dict2(text,dataset)

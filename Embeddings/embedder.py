@@ -94,44 +94,63 @@ def embedding_cls(text, model, tokenizer):
 
 def path(type, action):
         
-        #_________________captions____________________________________(falta bert)
+        #_________________captions article____________________________________(falta bert)
         #_____________________________________________________________  
 
-        if type=="rta_cls" and action=="caption":
-                path = 'BD Embeddings/lnk_cap_emb_rta-cls.json'
+        if type=="rta_cls" and action=="caption_art":
+                path = 'BD Embeddings Articles/lnk_cap_emb_rta-cls.json'
                 return path
         
-        elif type=="rta_mp" and action=="caption":
-                path = 'BD Embeddings/lnk_cap_emb_rta-mp.json'
+        elif type=="rta_mp" and action=="caption_art":
+                path = 'BD Embeddings Articles/lnk_cap_emb_rta-mp.json'
                 return path
         
-        elif type=="st_cls" and action=="caption":
-                path = 'BD Embeddings/lnk_cap_emb_st-cls.json'
+        elif type=="st_cls" and action=="caption_art":
+                path = 'BD Embeddings Articles/lnk_cap_emb_st-cls.json'
                 return path
         
-        elif type=="st_mp" and action=="caption":
-                path = 'BD Embeddings/lnk_cap_emb_st-mp.json'
+        elif type=="st_mp" and action=="caption_art":
+                path = 'BD Embeddings Articles/lnk_cap_emb_st-mp.json'
+                return path
+        
+        #_________________captions WIKIMEDIA____________________________________(falta bert)
+        #_____________________________________________________________  
+
+        if type=="rta_cls" and action=="caption_wiki":
+                path = 'BD Embeddings New Dataset/lnk_cap_emb_rta-cls.json'
+                return path
+        
+        elif type=="rta_mp" and action=="caption_wiki":
+                path = 'BD Embeddings New Dataset/lnk_cap_emb_rta-mp.json'
+                return path
+        
+        elif type=="st_cls" and action=="caption_wiki":
+                path = 'BD Embeddings New Dataset/lnk_cap_emb_st-cls.json'
+                return path
+        
+        elif type=="st_mp" and action=="caption_wiki":
+                path = 'BD Embeddings New Dataset/lnk_cap_emb_st-mp.json'
                 return path
         #_________________articles____________________________________(falta bert)
         #_____________________________________________________________  
 
         elif type=="rta_cls" and action=="article":
-                path = 'BD Embeddings/lnk_art_emb_rta-cls.json'
+                path = 'BD Embeddings Articles/lnk_art_emb_rta-cls.json'
                 return path
         
         elif type=="rta_mp" and action=="article":
-                path = 'BD Embeddings/lnk_art_emb_rta-mp.json'
+                path = 'BD Embeddings Articles/lnk_art_emb_rta-mp.json'
                 return path
         
         elif type=="st_cls" and action=="article":
-                path = 'BD Embeddings/lnk_art_emb_st-cls.json'
+                path = 'BD Embeddings Articles/lnk_art_emb_st-cls.json'
                 return path
         
         elif type=="st_mp" and action=="article":
-                path = 'BD Embeddings/lnk_art_emb_st-mp.json'
+                path = 'BD Embeddings Articles/lnk_art_emb_st-mp.json'
                 return path
         
-        #_________________pesos____________________________________(falta bert)
+        #_________________pesos article____________________________________(falta bert)
         #_____________________________________________________________  
 
         elif type=="rta_cls" and action=="pesos":

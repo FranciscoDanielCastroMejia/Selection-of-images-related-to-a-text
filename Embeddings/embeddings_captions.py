@@ -25,29 +25,45 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 print(device)
 
 
+#___Here choose the database we have to options, databse for links of articles o database o links of wikimedia
+
+#database = 'Article'
+database = 'Wikimedia'
+
 #________________here we choose which embedder we will use_____________
 
 types = ["rta_cls", "rta_mp", "st_cls", "st_mp"]
 
-type_of_embedder = types[0]
+type_of_embedder = types[3]
 
 
-#we load the data base and create the new one f it doesnt exist
+#_____Here we choose the path deppendind of the database that was choosen
 
-if os.path.exists('BD Sistema Img Caption/only_links_captions.json'):
-    #if the data base exists, only open
-    with open('BD Sistema Img Caption//only_links_captions.json', 'r') as file:
-        data_base = json.load(file)
+if database == 'Article':
+
+    #we load the data base and create the new one f it doesnt exist
+
+    if os.path.exists('BD Dataset Articles/only_links_captions.json'):
+        #if the data base exists, only open
+        with open('BD Dataset Articles/only_links_captions.json', 'r') as file:
+            data_base = json.load(file)
+        
+    else:
+        #if it doesnt exist we create
+        with open('BD Dataset Articles/hash_paths_blog.json', 'r') as file:
+            data = json.load(file)
+        
+        data_base = {link: values["caption"] for link, values in data.items()}#creamos una nueva base de datos donde solo tenga la forma de link:caption
+        
+        with open('BD Dataset Articles/only_links_captions.json','w') as file:
+            json.dump(data_base, file, indent=4)
+
+elif database == 'Wikimedia':
     
-else:
-    #if it doesnt exist we create
-    with open('BD Sistema Img Caption//hash_paths_blog.json', 'r') as file:
-        data = json.load(file)
-    
-    data_base = {link: values["caption"] for link, values in data.items()}#creamos una nueva base de datos donde solo tenga la forma de link:caption
-    
-    with open('BD Sistema Img Caption//only_links_captions.json','w') as file:
-        json.dump(data_base, file, indent=4)
+    with open('BD New Dataset/DB_all_links_captions.json', 'r') as file:
+            data_base = json.load(file)
+        
+
 
 
 
@@ -72,7 +88,7 @@ barra.finish()
 
 #Here we save the new database with the links and the embbedings
 
-path = embedder.path(type_of_embedder, "caption")
+path = embedder.path(type_of_embedder, "caption_wiki")
 
 
 with open(path,'w') as file:
