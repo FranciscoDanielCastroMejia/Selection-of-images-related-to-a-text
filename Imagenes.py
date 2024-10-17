@@ -62,7 +62,7 @@ def rectange(peso, width, height, marco_ancho): #los parametros de entrada son l
 
 
 #-En esta parte crearemos las bases de datos donde vienen los productos cosenos con el texto qeu queremos ingresar
-text = "Cars are an integral part of modern life, offering convenience, mobility, and freedom to travel. From sleek sports cars that embody speed and performance to reliable family sedans designed for comfort and safety, the variety of vehicles on the road reflects the diverse needs and preferences of drivers. Electric cars are becoming increasingly popular, representing a shift towards sustainability with their environmentally friendly designs and innovative technologies. Meanwhile, luxury cars continue to captivate with their sophisticated features and high-end craftsmanship. Whether it’s a compact car for city driving or a rugged SUV for off-road adventures, cars play a crucial role in shaping our daily experiences and the way we connect with the world around us."
+text = "The number of motor vehicles in San Luis Potos\u00ed is growing rapidly. In 1988 little more than 66,000 vehicles were circulating in our city, this one year. This increase is in sharp contrast to the corresponding increase in the population of the city of less than 100% in the same period."
 #dataset = "caption_art" #elegir el dataset para los captions con el articulo
 #dataset = "caption_wiki" #elegir el dataset para los captions con el dataset wikimedia
 dataset = "GLOBAL" #elegir el dataset para los captions con el dataset GLOBAL (wikimedia + articulo)
@@ -93,7 +93,7 @@ articles = {valor: llave for llave, valor in art.items()}
 #ahora buscaremos el link de la imagen dependiendo el texto que se ingreso para generar los pesos
 if text in articles:
     link_acticle = articles[text]
-    print(link_acticle)
+    print(f'Link de la imagen del articulo: {link_acticle}')
 else:
     link_acticle = 'Article not found'
     print(link_acticle)
@@ -106,7 +106,7 @@ else:
 #n_datos = 626
 n_img = 20
 
-#seleccionamos los primeros elementos
+#seleccionamos los primeros elementos de cada base
 pesos_rb_cls = dict(list(pesos_rb_cls.items())[:n_img])
 pesos_rb_mp = dict(list(pesos_rb_mp.items())[:n_img])
 pesos_st_cls = dict(list(pesos_st_cls.items())[:n_img])
@@ -114,12 +114,18 @@ pesos_st_mp = dict(list(pesos_st_mp.items())[:n_img])
 
 
 
-
+#Imagenes es un arreglo de cada diccionario de los mejores 20 pesos de cada embedding
 imagenes = [pesos_rb_cls, pesos_rb_mp, pesos_st_cls, pesos_st_mp]
 
 
 
-img_repetitions = {} #diccionario donde se guardaran las imagenes como llaves y el valor como la cantidad que se repiten
+img_repetitions = {} #diccionario donde se guardaran solo las imagenes que se reptien donde las llaves es el link y el valor la cantidad que se repiten
+img_rep_and_not_rep = {} #diccionario donde se guardan las imagenes qeu se reptines y las qeu no se repiten
+
+
+#Se crearan dos arreglos:
+# Primero crearemos una arreglo en donde se guardara especificamente las imagens que estan repetidas minimo 1 vez.
+
 
 for n, BD_img_pesos in enumerate(imagenes):#en el primer for iteraremos sobre la lista de los diferentes diccionarios de imagenes-pesos 
     #n sera la base de datos en la que se encuentra actualmente
@@ -132,15 +138,65 @@ for n, BD_img_pesos in enumerate(imagenes):#en el primer for iteraremos sobre la
         if img in imagenes[n]: #si la imagen existe en la base de datos actual, se pasa a verificar si se repite o no
             
             #ahora veremos si la imagen ya fue agregada al diccionario
-            if img in img_repetitions: # si la imagen ya habia sido agregada, se incrementa su valor con una unidad
-                img_repetitions[img] = img_repetitions[img] + 1 
+            if img in img_rep_and_not_rep: # si la imagen ya habia sido agregada, se incrementa su valor con una unidad
+                img_rep_and_not_rep[img] = img_rep_and_not_rep[img] + 1 
                 
 
             else:   #si la imagen no habia sido agregada, se inicializa con 0
-                img_repetitions[img] = 0
+                img_rep_and_not_rep[img] = 0
+
+#Se tomaran solo las imagenes que se repiten por lo menos 1 vez
+
+#hacemos arreglos los diccionarios donde contienen las n_img con sus pesos asociados
+
+
+
+for link, repetitions in img_rep_and_not_rep.items():
+    if repetitions > 0:
+        img_repetitions[link] = repetitions
+    else:
+        continue
+print(len(img_repetitions))
+
+#Ahora crearemos una base de datos donde no contenga ninguna de las imagenes de la base de datos "img_repetitions"
+
+#La manera en como se ira creando la base de datos sera agarrando la primera imagen de cada base de datos de los embeddings
+#y asi consecutivamente.
+
+links_rb_cls = list(pesos_rb_cls.keys()) 
+links_rb_mp = list(pesos_rb_mp.keys())  
+links_st_cls = list(pesos_st_cls.keys())  
+links_st_mp = list(pesos_st_mp.keys()) 
+
+img_links = [links_rb_cls, links_rb_mp, links_st_cls, links_st_mp]
+
+
+#print(img_links[0][0]) #asi se accede al primer link de la primera lista de links
+
+img_0_rep_ordenadas = {} #Diccionario en donde se agregan las imagenes que no se repiten ninguna vez y con ORDEN de importancia
+
+
+for i in range(n_img): #Se itera n_img, en este caso 20 veces
+    for m in range(4):#4 por que son 4 bases de datos
+        if img_links[m][i] in img_repetitions: #si la imagen esta en la lista de las qeu se repiten por lo menos una vez, no la agregamos
+            continue
+        else:
+            img_0_rep_ordenadas[img_links[m][i]] = 0
+
+with open('img_0_rep_ordenadas.json', 'w') as file:
+    json.dump(img_0_rep_ordenadas, file, indent=4)
+
 
 #primero se ordenará de mayor a menor los pesos y despues se guardarán
 img_repetitions = dict(sorted(img_repetitions.items(), key=lambda item: item[1], reverse=True ))
+
+
+
+#ahora le agregaremos los datos al diccionario donde ya se tienen las imagenes repetidas
+        
+for link, value in img_0_rep_ordenadas.items():
+    img_repetitions[link] = value
+
 
 with open('img_repetitions.json', 'w') as file:
     json.dump(img_repetitions, file, indent=4)
