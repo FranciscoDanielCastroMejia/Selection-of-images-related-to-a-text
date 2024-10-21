@@ -126,7 +126,7 @@ df_groups = pd.concat([df_groups,new_row], ignore_index=True)
 
 
 
-def main():
+def main_analysis():
     
     st.title("Analisis de datos")
     st.divider()
@@ -179,7 +179,7 @@ def main():
 
 if __name__=="__main__":
 
-    main()
+    main_analysis()
 
 
 
